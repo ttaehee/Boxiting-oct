@@ -1,11 +1,18 @@
 package com.taehee.dust.common.feign.dto.response;
 
-import com.taehee.dust.common.feign.dto.ParticulateMatterItems;
-
 import java.util.List;
 
 public record ParticulateMatterResponse(
-        Integer totalCount,
-        List<ParticulateMatterItems> items
+        Response response
 ) {
+    public record Response(
+            Body body
+    ) {
+    }
+
+    public record Body(
+            Integer totalCount,
+            List<ParticulateMatterItems> items
+    ) {
+    }
 }

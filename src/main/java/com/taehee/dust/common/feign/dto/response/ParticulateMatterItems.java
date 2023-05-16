@@ -1,4 +1,4 @@
-package com.taehee.dust.common.feign.dto;
+package com.taehee.dust.common.feign.dto.response;
 
 public record ParticulateMatterItems(
         //TODO 추후 자료형 수정 고려
