@@ -1,12 +1,14 @@
 package com.taehee.dust.common.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Getter
 @Component
 public class OpenApiProperties {
-    @Value("${api.apiKey}")
-    private String apiKey;
+    @Value("${api.serviceKey}")
+    private String serviceKey;
 
     @Value("${api.returnType}")
     private String returnType;
@@ -16,9 +18,6 @@ public class OpenApiProperties {
 
     @Value("${api.pageNo}")
     private String pageNo;
-
-    @Value("${api.sidoName}")
-    private String sidoName;
 
     @Value("${api.ver}")
     private String ver;
