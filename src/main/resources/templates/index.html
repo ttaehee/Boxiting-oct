@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyDust</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="container">
+    <div class="contents">
+
+        <div class="first-box">
+            <div class="select-location-title">
+                지역 선택
+            </div>
+            <div class="select-location-div">
+                <label>
+                    <select th:name="location" class="select-location-list">
+                        <option class="select-location-items">지역을 선택해주세요.</option>
+                        <option class="select-location-items" th:each="locationName:${location}" th:value="${locationName}" th:text="${locationName}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="second-box">
+            <div class="select-measuringStation-title">
+                관측소 선택
+            </div>
+            <div class="select-measuringStation-div">
+                <select th:name="measuringStation" class="select-measuringStation-list">
+                    <option class="select-measuringStation-items">지역을 선택해주세요.</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="result">
+
+    </div>
+</div>
+</body>
+
+<script>
+  $(document).ready(function() {
+    let locationName = null;
+
+    $('.select-location-list').change(function() {
+      locationName = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: 'api/v1/' + locationName,
+        success: function(data) {
+          let options = '<option class="select-measuringStation-items">지역을 선택해주세요.</option>';
+          for (let i = 0; i < data.length; i++) {
+            options += '<option class="select-measuringStation-items" value="' + data[i]['measuringStationName'] + '">' + data[i]['measuringStationName'] + '</option>';
+          }
+          $('.select-measuringStation-list').html(options);
+        },
+        error: function() {
+          alert('Error fetching measuring station data.');
+        }
+      });
+    });
+
+    $('.select-measuringStation-list').change(function() {
+      let measuringStationName = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: 'api/v1/' + locationName + '/' + measuringStationName,
+        success: function(data) {
+          let options = '';
+          options += `<div class="location">
+        <span>지역</span>
+        <span> ${data['location']} </span>
+      </div>
+      <div class="measuringStation">
+        <span>관측소</span>
+        <span> ${data['measuringStationName']} </span>
+      </div>
+      <div class="pm10-value">
+        <span>미세먼지</span>
+        <span> ${data['pm10Value']} </span>
+      </div>
+      <div class="pm10-grade">
+        <span>등급</span>
+        <span> ${data['pm10Grade1h']} </span>
+      </div>
+      <div class="pm25-value">
+        <span>초미세먼지</span>
+        <span> ${data['pm25Value']} </span>
+      </div>
+      <div class="pm25-grade">
+        <span>등급</span>
+        <span> ${data['pm25Grade1h']} </span>
+      </div>`
+          $('.result').html(options);
+        },
+        error: function() {
+          alert('Error fetching measuring station data.');
+        }
+      });
+    });
+  });
+
+</script>
+</html>
