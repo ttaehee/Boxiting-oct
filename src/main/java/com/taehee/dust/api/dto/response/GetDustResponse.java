@@ -4,8 +4,8 @@ import com.taehee.dust.api.dto.Grade;
 import com.taehee.dust.common.feign.dto.response.ParticulateMatterItems;
 
 public record GetDustResponse(
-        Object sido,
-        Object stationName,
+        String locationName,
+        String measuringStationName,
         Object pm10Value,
         Object pm25Value,
         String pm10Grade1h,
