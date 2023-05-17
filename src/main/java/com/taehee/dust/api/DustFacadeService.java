@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.taehee.dust.api.dto.response.GetAllMeasuringStationResponse.toGetAllMeasuringStationResponse;
 import static com.taehee.dust.api.dto.response.GetDustResponse.toGetDustResponse;
@@ -35,6 +36,13 @@ public class DustFacadeService {
                 .orElseThrow(IllegalArgumentException::new);
 
         return toGetDustResponse(particulateMatterItems);
+    }
+
+    public List<String> getAllLocation() {
+        List<Location> locations = locationRepository.findAll();
+        return locations.stream()
+                .map(Location::getName)
+                .collect(Collectors.toList());
     }
 
     public GetAllMeasuringStationResponse getAllMeasuringStation(String locationName) {

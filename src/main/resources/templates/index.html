@@ -58,8 +58,10 @@
         url: 'api/v1/' + locationName,
         success: function(data) {
           let options = '<option class="select-measuringStation-items">지역을 선택해주세요.</option>';
-          for (let i = 0; i < data.length; i++) {
-            options += '<option class="select-measuringStation-items" value="' + data[i]['measuringStationName'] + '">' + data[i]['measuringStationName'] + '</option>';
+          let temp = data.measuringStationNames;
+          console.log(temp);
+          for (let i = 0; i < temp.length; i++) {
+            options += '<option class="select-measuringStation-items" value="' + temp[i] + '">' + temp[i] + '</option>';
           }
           $('.select-measuringStation-list').html(options);
         },
