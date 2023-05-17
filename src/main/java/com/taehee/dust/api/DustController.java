@@ -1,5 +1,6 @@
 package com.taehee.dust.api;
 
+import com.taehee.dust.api.dto.response.GetAllMeasuringStationResponse;
 import com.taehee.dust.api.dto.response.GetDustResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,17 @@ public class DustController {
 
     private final DustFacadeService dustFacadeService;
 
-    @GetMapping("/{sidoName}/{stationName}")
+    @GetMapping("/{locationName}/{measuringStationName}")
     public ResponseEntity<GetDustResponse> getDustData(
-            @PathVariable String sidoName,
-            @PathVariable String stationName) {
-        return ResponseEntity.ok(dustFacadeService.getDustData(sidoName, stationName));
+            @PathVariable String locationName,
+            @PathVariable String measuringStationName) {
+        return ResponseEntity.ok(dustFacadeService.getDustData(locationName, measuringStationName));
+    }
+
+    @GetMapping("/{locationName}")
+    public ResponseEntity<GetAllMeasuringStationResponse> GetAllMeasuringStation(
+            @PathVariable String locationName
+    ) {
+        return ResponseEntity.ok(dustFacadeService.getAllMeasuringStation(locationName));
     }
 }

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Getter
 @Entity
-@Table(name = "question")
+@Table(name = "location")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location extends BaseTimeEntity {
 
