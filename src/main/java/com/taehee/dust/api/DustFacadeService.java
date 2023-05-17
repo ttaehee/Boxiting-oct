@@ -46,20 +46,37 @@ public class DustFacadeService {
     }
 
     public GetAllMeasuringStationResponse getAllMeasuringStation(String locationName) {
-        Location location = locationRepository.findByName(locationName)
-                .orElseThrow(IllegalArgumentException::new);
+        Location location = getLocationEntity(locationName);
         List<MeasuringStation> measuringStations = measuringStationRepository.findAllByLocationOrderByNameAsc(location);
 
         return toGetAllMeasuringStationResponse(measuringStations);
     }
 
-    private List<ParticulateMatterItems> getParticulateMatterDataFromOpenApi(String sidoName) {
+    public void saveMeasuringStation(String locationName) {
+        Location location = getLocationEntity(locationName);
+        getParticulateMatterDataFromOpenApi(locationName)
+                .forEach(
+                        particulateMatterItems -> measuringStationRepository.save(
+                                new MeasuringStation(
+                                        particulateMatterItems.stationName(),
+                                        location
+                                )
+                        )
+                );
+    }
+
+    private Location getLocationEntity(String locationName) {
+        return locationRepository.findByName(locationName)
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private List<ParticulateMatterItems> getParticulateMatterDataFromOpenApi(String locationName) {
         ParticulateMatterResponse particulateMatterResponse = particulateMatterClient.call(
                 openApiProperties.getServiceKey(),
                 openApiProperties.getReturnType(),
                 openApiProperties.getNumOfRows(),
                 openApiProperties.getPageNo(),
-                sidoName,
+                locationName,
                 openApiProperties.getVer()
         );
         return particulateMatterResponse.response().body().items();

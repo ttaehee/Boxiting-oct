@@ -4,10 +4,7 @@ import com.taehee.dust.api.dto.response.GetAllMeasuringStationResponse;
 import com.taehee.dust.api.dto.response.GetDustResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -24,9 +21,15 @@ public class DustController {
     }
 
     @GetMapping("/{locationName}")
-    public ResponseEntity<GetAllMeasuringStationResponse> GetAllMeasuringStation(
-            @PathVariable String locationName
-    ) {
+    public ResponseEntity<GetAllMeasuringStationResponse> getAllMeasuringStation(
+            @PathVariable String locationName) {
         return ResponseEntity.ok(dustFacadeService.getAllMeasuringStation(locationName));
+    }
+
+    @PostMapping("/{locationName}")
+    public ResponseEntity<Void> saveMeasuringStation(
+            @PathVariable String locationName) {
+        dustFacadeService.saveMeasuringStation(locationName);
+        return ResponseEntity.ok().build();
     }
 }

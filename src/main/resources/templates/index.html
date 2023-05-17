@@ -59,7 +59,6 @@
         success: function(data) {
           let options = '<option class="select-measuringStation-items">지역을 선택해주세요.</option>';
           let temp = data.measuringStationNames;
-          console.log(temp);
           for (let i = 0; i < temp.length; i++) {
             options += '<option class="select-measuringStation-items" value="' + temp[i] + '">' + temp[i] + '</option>';
           }

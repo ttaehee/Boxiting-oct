@@ -2,9 +2,9 @@ package com.taehee.dust.common.feign.dto.response;
 
 public record ParticulateMatterItems(
         //TODO 추후 자료형 수정 고려
-        Object stationName,
+        String stationName,
         Object mangName,
-        Object sidoName,
+        String sidoName,
         Object dataTime,
         Object so2Value,
         Object coValue,

@@ -33,7 +33,7 @@ public class MeasuringStation extends BaseTimeEntity {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    protected MeasuringStation(String name, Location location) {
+    public MeasuringStation(String name, Location location) {
         this.name = name;
         this.location = location;
     }
